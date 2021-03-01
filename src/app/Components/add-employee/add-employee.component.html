@@ -1,0 +1,275 @@
+<h2 class="alert alert-secondary w-25 mt-2">Add Employee Record</h2>
+
+<div class="container text-center">
+  <form [formGroup]="saveForm" class="saveForm" (ngSubmit)="addEmployee(saveForm)">
+    <div class="row">
+      <div class="col ml-5">
+        <mat-form-field class="w-50 float-left ml-5" appearance="fill">
+          <mat-label>Employee Id *</mat-label>
+          <input formControlName="emp_id" matInput placeholder="Employee Id">
+          <mat-error *ngIf="saveForm.get('emp_id')?.touched && saveForm.get('emp_id')?.hasError('required')">
+            Employee Id is Required!!!
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('emp_id')?.touched && saveForm.get('emp_id')?.hasError('pattern')">
+            Employee Should Be Number
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>First Name *</mat-label>
+          <input formControlName="first_name" matInput placeholder="FirstName">
+          <mat-error *ngIf="saveForm.get('first_name')?.touched && saveForm.get('first_name')?.hasError('required')">
+            First Name is Required!!!
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('first_name')?.touched && saveForm.get('first_name')?.hasError('maxlength')">
+            Input Between 1 To 50 characters
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('first_name')?.touched && saveForm.get('first_name')?.hasError('pattern')">
+            Please input alphabet only!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Last Name *</mat-label>
+          <input matInput formControlName="last_name" placeholder="LastName">
+          <mat-error *ngIf="saveForm.get('last_name')?.touched && saveForm.get('last_name')?.hasError('required')">
+            Last Name is Required!!!
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('last_name')?.touched && saveForm.get('last_name')?.hasError('maxlength')">
+            Input Between 1 To 50 characters
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('last_name')?.touched && saveForm.get('last_name')?.hasError('pattern')">
+            Please input alphabet only!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Date of Birth *</mat-label>
+          <input matInput formControlName="dob" [max]="yesterday" [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="saveForm.get('dob')?.touched && saveForm.get('dob')?.hasError('required')">
+            DOB is Required!!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Gender *</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option *ngFor="let item of genderList" value="{{item}}">{{item}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="saveForm.get('gender')?.touched && saveForm.get('gender')?.hasError('required')">
+            Gender Required!!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Mobile No. *</mat-label>
+          <input matInput type="tel" formControlName="mobile_num" placeholder="Your Phone Number">
+          <mat-icon class="float-right">phone</mat-icon>
+          <mat-error *ngIf="saveForm.get('mobile_num')?.touched && saveForm.get('mobile_num')?.hasError('required')">
+            Mobile No. Required!!!
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('mobile_num')?.touched && saveForm.get('mobile_num')?.hasError('pattern')">
+            Please input numeric and 10 numbers only
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Email Id(Personal) *</mat-label>
+          <input matInput type="email" formControlName="email_id" placeholder="Enter Email">
+          <mat-error *ngIf="saveForm.get('email_id')?.touched && saveForm.get('email_id')?.hasError('required')">
+            Email is Required
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('email_id')?.touched && saveForm.get('email_id')?.hasError('pattern')">
+            Enter the valid Email
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col ml-5">
+        <mat-form-field class="w-50 float-left ml-5" appearance="fill">
+          <mat-label>Office email *</mat-label>
+          <input matInput type="email" formControlName="office_mail" placeholder="Enter offical email">
+          <mat-error *ngIf="saveForm.get('office_mail')?.touched && saveForm.get('office_mail')?.hasError('required')">
+            Email is Required
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('office_mail')?.touched && saveForm.get('office_mail')?.hasError('pattern')">
+            Enter the valid Email
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Joining Date *</mat-label>
+          <input formControlName="doj" matInput type="date">
+          <mat-error *ngIf="saveForm.get('doj')?.touched && saveForm.get('doj')?.hasError('required')">
+            Joining Date is Required!!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Employee Level *</mat-label>
+          <mat-select formControlName="emp_level">
+            <mat-option *ngFor="let item of employeeLevel" value="{{item}}">{{item}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="saveForm.get('emp_level')?.touched && saveForm.get('emp_level')?.hasError('required')">
+            Employee Level is required!!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Post *</mat-label>
+          <input formControlName="post_name" matInput placeholder="Enter Post">
+          <mat-error *ngIf="saveForm.get('post_name')?.touched && saveForm.get('post_name')?.hasError('required')">
+            Post is required!!!
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('post_name')?.touched && saveForm.get('post_name')?.hasError('maxlength')">
+            Please input within 30 characters
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('post_name')?.touched && saveForm.get('post_name')?.hasError('pattern')">
+            Please input only alphabet and space
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+
+        <mat-form-field appearance="fill">
+          <mat-label>BloodGroup</mat-label>
+          <mat-select formControlName="blood_group">
+            <mat-option *ngFor="let item of bloodGroup" value="{{item}}">{{item}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="saveForm.get('blood_group')?.touched && saveForm.get('blood_group')?.hasError('required')">
+            BloodGroup is required!!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>BasicPay *</mat-label>
+          <input formControlName="basic_pay" matInput placeholder="Enter Post">
+          <mat-error *ngIf="saveForm.get('basic_pay')?.touched && saveForm.get('basic_pay')?.hasError('required')">
+            Basic pay is required!!!
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('basic_pay')?.touched && saveForm.get('basic_pay')?.hasError('minlength')">
+            Minimum 3 digits required
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('basic_pay')?.touched && saveForm.get('basic_pay')?.hasError('maxlength')">
+            Maximum 8 digits required
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('basic_pay')?.touched && saveForm.get('basic_pay')?.hasError('pattern')">
+            Please input numeric only!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>House allowance *</mat-label>
+          <input formControlName="house_allowance" matInput placeholder="Enter House allowance">
+          <mat-error *ngIf="saveForm.get('house_allowance')?.touched && saveForm.get('house_allowance')?.hasError('required')">
+            House allowance is required!!!
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('house_allowance')?.touched && saveForm.get('house_allowance')?.hasError('minlength')">
+            Minimum 3 digits required
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('house_allowance')?.touched && saveForm.get('house_allowance')?.hasError('maxlength')">
+            Maximum 8 digits required
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('house_allowance')?.touched && saveForm.get('house_allowance')?.hasError('pattern')">
+            Please input numeric only!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Pan Card No</mat-label>
+          <input  formControlName="pan_num" matInput placeholder="Enter Pan Card No">
+          <mat-error *ngIf="saveForm.get('pan_num')?.touched && saveForm.get('pan_num')?.hasError('required')">
+           Pan Card is required!!!
+          </mat-error>
+          <mat-error *ngIf="saveForm.get('pan_num')?.touched && saveForm.get('pan_num')?.hasError('maxlength')">
+            Please input 10 characters only!
+           </mat-error>
+           <mat-error *ngIf="saveForm.get('pan_num')?.touched && saveForm.get('pan_num')?.hasError('pattern')">
+            Please input alphanumeric only!
+           </mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="col">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Aadhaar card no
+          </mat-label>
+          <input formControlName="aadhaar_num" matInput placeholder="Enter Aadhaar card no">
+          <mat-error *ngIf="saveForm.get('aadhaar_num')?.touched && saveForm.get('aadhaar_num')?.hasError('required')">
+            Aadhaar card no is required!!!
+           </mat-error>
+           <mat-error *ngIf="saveForm.get('aadhaar_num')?.touched && saveForm.get('aadhaar_num')?.hasError('maxlength')">
+             Max Length is 12
+            </mat-error>
+            <mat-error *ngIf="saveForm.get('aadhaar_num')?.touched && saveForm.get('aadhaar_num')?.hasError('pattern')">
+              Please input Numbers  only!
+             </mat-error>
+         </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Permanent address </mat-label>
+          <textarea formControlName="permanent_address" matInput></textarea>
+          <mat-error
+            *ngIf="saveForm.get('permanent_address')?.touched && saveForm.get('permanent_address')?.hasError('required')">
+            Permanent address is Required!!!
+          </mat-error>
+          <mat-error
+            *ngIf="saveForm.get('permanent_address')?.touched && saveForm.get('permanent_address')?.hasError('maxlength')">
+            Text should not exceeds 200 characters!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Present address</mat-label>
+          <textarea formControlName="present_address" matInput></textarea>
+          <mat-error
+            *ngIf="saveForm.get('present_address')?.touched && saveForm.get('present_address')?.hasError('required')">
+            Present address is Required!!!
+          </mat-error>
+          <mat-error
+            *ngIf="saveForm.get('present_address')?.touched && saveForm.get('present_address')?.hasError('maxlength')">
+            Text should not exceeds 200 characters!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="saveForm.invalid" class="m-2">Save</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button mat-raised-button color="warn" (click)="dashboard()"  class="m-2">Cancel</button>
+  </form>
+</div>

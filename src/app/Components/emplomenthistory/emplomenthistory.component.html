@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="container-fluid p-0 text-center">
+    <h1 class="h3 mb-3">Employement History</h1>
+    <div class="row">
+      <div class="col-xl-8">
+        <div class="card">
+          <div class="card-header pb-0">
+            <div class="card-actions float-right">
+              <div class="dropdown show">
+                <a (click)="callDashboard()" class="btn btn-success">
+                        Back to List
+                </a>
+
+              </div>
+            </div>
+            <h3 class="card-title mb-0 text-left">{{emp_name}}({{emp_Id}})</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped" style="width:100%">
+              <thead>
+                <tr>
+
+                  <th>Organization</th>
+                  <th>Period</th>
+                  <th>Location</th>
+                  <th>Post</th>
+                </tr>
+              </thead>
+              <tbody>
+                <div class="text-center" *ngIf="empList" >
+                  <h2 class="alignment">No Record Found!!!</h2>
+                </div>
+
+                <tr *ngFor="let item of empHistory " >
+
+                  <td>{{item.organization_name}}</td>
+                  <td>{{item.from_date | date:'dd/MM/yyyy'}}~{{item.until_date | date:'dd/MM/yyyy'}}</td>
+                  <td>{{item.location}} ({{item.country}})</td>
+                  <td>{{item.post}}</td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

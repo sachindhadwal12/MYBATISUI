@@ -1,0 +1,85 @@
+
+<div class="container">
+  <div class="container-fluid p-0">
+    <h1 class="h3 m-3 text-center">Employee Records</h1>
+    <div class="jumbotron">
+     <div class="row">
+       <div class="col-md-6">
+        <input class="form-control" type="text" name="search" [(ngModel)]="search" autocomplete="on"
+        placeholder=" Start searching for a Employee by emp_id or name or contact">
+       </div>
+       <div class="col-md-6">
+        <label for="empId">Gender</label>
+        <select class="form-control" (change)="selectChangeHandler($event)" style="width: 10em;display: initial;margin-left: 2em;" id="exampleFormControlSelect1">
+          <option>Select Gender</option>
+          <option *ngFor="let item of gender" value="{{item}}">{{item}}</option>
+        </select>
+        <button class="btn btn-warning" style="margin-left: 2em;" (click)="searchData()"> Search</button>
+       </div>
+     </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-8">
+        <div class="card">
+          <div class="card-header pb-0">
+            <div class="card-actions float-left">
+              <a [routerLink]="['/addEmployee']" class="btn btn-primary align mr-5">Add Employee</a>
+            </div>
+            <div class="card-actions float-right">
+              <a href="http://localhost:8080/api/v1/download/employees.csv" class="btn btn-primary align mr-5">Download CSV</a>
+            </div>
+
+          </div>
+          <div class="card-body text-center">
+            <table class="table table-striped " style="width:100%">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th [class.active]="order === 'first_name'"
+                  (click)="setOrder('first_name')">Employee <span [hidden]="reverse">▼</span
+                    ><span [hidden]="!reverse">▲</span> </th>
+                  <th>Contact</th>
+                  <th>Level & Post</th>
+                  <th></th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let employee of EmpList | orderBy : order:reverse:'case-insensitive' | filter:search">
+                  <td>
+                      <img src="{{employee.profile_pict}}" width="32" height="32" class="rounded-circle my-n1"
+                     onerror="this.src='https://bootdey.com/img/Content/avatar/avatar4.png'"    alt="Avatar">
+                    </td>
+                  <td>{{employee.first_name + employee.last_name | titlecase}} <br> {{employee.emp_id}} </td>
+                  <td>{{employee.mobile_num}} <br> {{employee.office_mail}}</td>
+                  <td>{{employee.emp_level}}/ <br> {{employee.post_name}}
+                  <td>
+                  <td class="btn-group btn-group-sm">
+                    <a class="btn btn-secondary tooltips" data-placement="top" (click)="onEmployementHistory(employee)"
+                      data-toggle="tooltip" matTooltip="EmployementHistory" data-original-title="Delete"><i
+                        class="fa fa-history"></i></a>
+
+                        <!-- (click)="onEditEmployee(employee.emp_id)" -->
+                    <a  class="btn btn-primary tooltips" routerLink="/edit" [queryParams]="{emp_id: employee.emp_id}"
+                     data-placement="top" data-toggle="tooltip"
+                      matTooltip="Edit" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                    <a class="btn btn-warning tooltips" data-placement="top" (click)="onDeleteEmloyee(employee.emp_id)"
+                      data-toggle="tooltip" matTooltip="Delete" data-original-title="Delete"><i
+                        class="fa fa-times"></i></a>
+                  </td>
+
+
+                </tr>
+
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

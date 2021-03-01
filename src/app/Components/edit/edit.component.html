@@ -1,0 +1,276 @@
+<h1 class="alert alert-success text-center w-50 mt-3">Edit Employee</h1>
+<div class="container text-center mt-2">
+  <form [formGroup]="editForm" class="editForm" (ngSubmit)="editEmployee(editForm)">
+    <div class="row">
+      <div class="col ml-5">
+        <mat-form-field class="w-50 float-left ml-5" appearance="fill">
+          <mat-label>Employee Id *</mat-label>
+          <input formControlName="emp_id" [(ngModel)]="employee.emp_id" readonly matInput placeholder="Employee Id">
+          <mat-error *ngIf="editForm.get('emp_id')?.touched && editForm.get('emp_id')?.hasError('required')">
+            Employee Id is Required!!!
+          </mat-error>
+          <mat-error *ngIf="editForm.get('emp_id')?.touched && editForm.get('emp_id')?.hasError('pattern')">
+            Employee Should Be Number
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>First Name *</mat-label>
+          <input formControlName="first_name" [(ngModel)]="employee.first_name" matInput placeholder="FirstName">
+          <mat-error *ngIf="editForm.get('first_name')?.touched && editForm.get('first_name')?.hasError('required')">
+            First Name is Required!!!
+          </mat-error>
+          <mat-error *ngIf="editForm.get('first_name')?.touched && editForm.get('first_name')?.hasError('maxlength')">
+            Input Between 1 To 50 characters
+          </mat-error>
+          <mat-error *ngIf="editForm.get('first_name')?.touched && editForm.get('first_name')?.hasError('pattern')">
+            Please input alphabet only!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Last Name *</mat-label>
+          <input matInput formControlName="last_name" [(ngModel)]="employee.last_name" placeholder="LastName">
+          <mat-error *ngIf="editForm.get('last_name')?.touched && editForm.get('last_name')?.hasError('required')">
+            Last Name is Required!!!
+          </mat-error>
+          <mat-error *ngIf="editForm.get('last_name')?.touched && editForm.get('last_name')?.hasError('maxlength')">
+            Input Between 1 To 50 characters
+          </mat-error>
+          <mat-error *ngIf="editForm.get('last_name')?.touched && editForm.get('last_name')?.hasError('pattern')">
+            Please input alphabet only!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Date of Birth *</mat-label>
+          <input matInput formControlName="dob" [max]="yesterday" [(ngModel)]="employee.dob" [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="editForm.get('dob')?.touched && editForm.get('dob')?.hasError('required')">
+            DOB is Required!!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Gender *</mat-label>
+          <mat-select formControlName="gender" [(ngModel)]="employee.gender">
+            <mat-option *ngFor="let item of genderList" value="{{item}}">{{item}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="editForm.get('gender')?.touched && editForm.get('gender')?.hasError('required')">
+            Gender Required!!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Mobile No. *</mat-label>
+          <input matInput type="tel" formControlName="mobile_num" [(ngModel)]="employee.mobile_num" placeholder="Your Phone Number">
+          <mat-icon class="float-right">phone</mat-icon>
+          <mat-error *ngIf="editForm.get('mobile_num')?.touched && editForm.get('mobile_num')?.hasError('required')">
+            Mobile No. Required!!!
+          </mat-error>
+          <mat-error *ngIf="editForm.get('mobile_num')?.touched && editForm.get('mobile_num')?.hasError('pattern')">
+            Please input numeric and 10 numbers only
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Email Id(Personal) *</mat-label>
+          <input matInput type="email" formControlName="email_id" [(ngModel)]="employee.email_id" placeholder="Enter Email">
+          <mat-error *ngIf="editForm.get('email_id')?.touched && editForm.get('email_id')?.hasError('required')">
+            Email is Required
+          </mat-error>
+          <mat-error *ngIf="editForm.get('email_id')?.touched && editForm.get('email_id')?.hasError('pattern')">
+            Enter the valid Email
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col ml-5">
+        <mat-form-field class="w-50 float-left ml-5" appearance="fill">
+          <mat-label>Office email *</mat-label>
+          <input matInput type="email" formControlName="office_mail" [(ngModel)]="employee.office_mail" placeholder="Enter offical email">
+          <mat-error *ngIf="editForm.get('office_mail')?.touched && editForm.get('office_mail')?.hasError('required')">
+            Email is Required
+          </mat-error>
+          <mat-error *ngIf="editForm.get('office_mail')?.touched && editForm.get('office_mail')?.hasError('pattern')">
+            Enter the valid Email
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Joining Date *</mat-label>
+          <input matInput formControlName="doj" [(ngModel)]="employee.doj" [matDatepicker]="picker2">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+          <mat-error *ngIf="editForm.get('doj')?.touched && editForm.get('doj')?.hasError('required')">
+            Joining Date is Required!!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Employee Level *</mat-label>
+          <mat-select formControlName="emp_level" [(ngModel)]="employee.emp_level">
+            <mat-option *ngFor="let item of employeeLevel" [value]="item">{{item}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="editForm.get('emp_level')?.touched && editForm.get('emp_level')?.hasError('required')">
+            Employee Level Required!!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Post *</mat-label>
+          <input formControlName="post_name" [(ngModel)]="employee.post_name" matInput placeholder="Enter Post">
+          <mat-error *ngIf="editForm.get('post_name')?.touched && editForm.get('post_name')?.hasError('required')">
+            Post is required!!!
+          </mat-error>
+          <mat-error *ngIf="editForm.get('post_name')?.touched && editForm.get('post_name')?.hasError('maxlength')">
+            Please input within 30 characters
+          </mat-error>
+          <mat-error *ngIf="editForm.get('post_name')?.touched && editForm.get('post_name')?.hasError('pattern')">
+            Please input only alphabet and space
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+
+        <mat-form-field appearance="fill">
+          <mat-label>BloodGroup</mat-label>
+          <mat-select formControlName="blood_group" [(ngModel)]="employee.blood_group">
+            <mat-option *ngFor="let item of bloodGroup" value="{{item}}">{{item}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="editForm.get('blood_group')?.touched && editForm.get('blood_group')?.hasError('required')">
+            BloodGroup is required!!!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>BasicPay *</mat-label>
+          <input formControlName="basic_pay" [(ngModel)]="employee.basic_pay" matInput placeholder="Enter Post">
+          <mat-error *ngIf="editForm.get('basic_pay')?.touched && editForm.get('basic_pay')?.hasError('required')">
+            Basic pay is required!!!
+          </mat-error>
+          <mat-error *ngIf="editForm.get('basic_pay')?.touched && editForm.get('basic_pay')?.hasError('minlength')">
+            Minimum 3 digits required
+          </mat-error>
+          <mat-error *ngIf="editForm.get('basic_pay')?.touched && editForm.get('basic_pay')?.hasError('maxlength')">
+            Maximum 8 digits required
+          </mat-error>
+          <mat-error *ngIf="editForm.get('basic_pay')?.touched && editForm.get('basic_pay')?.hasError('pattern')">
+            Please input numeric only!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>House allowance *</mat-label>
+          <input formControlName="house_allowance" [(ngModel)]="employee.house_allowance" matInput placeholder="Enter House allowance">
+          <mat-error *ngIf="editForm.get('house_allowance')?.touched && editForm.get('house_allowance')?.hasError('required')">
+            House allowance is required!!!
+          </mat-error>
+          <mat-error *ngIf="editForm.get('house_allowance')?.touched && editForm.get('house_allowance')?.hasError('minlength')">
+            Minimum 3 digits required
+          </mat-error>
+          <mat-error *ngIf="editForm.get('house_allowance')?.touched && editForm.get('house_allowance')?.hasError('maxlength')">
+            Maximum 8 digits required
+          </mat-error>
+          <mat-error *ngIf="editForm.get('house_allowance')?.touched && editForm.get('house_allowance')?.hasError('pattern')">
+            Please input numeric only!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Pan Card No</mat-label>
+          <input  formControlName="pan_num" [(ngModel)]="employee.pan_num" matInput placeholder="Enter Pan Card No">
+          <mat-error *ngIf="editForm.get('pan_num')?.touched && editForm.get('pan_num')?.hasError('required')">
+           Pan Card is required!!!
+          </mat-error>
+          <mat-error *ngIf="editForm.get('pan_num')?.touched && editForm.get('pan_num')?.hasError('maxlength')">
+            Please input 10 characters only!
+           </mat-error>
+           <mat-error *ngIf="editForm.get('pan_num')?.touched && editForm.get('pan_num')?.hasError('pattern')">
+            Please input alphanumeric only!
+           </mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="col">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Aadhaar card no
+          </mat-label>
+          <input formControlName="aadhaar_num" [(ngModel)]="employee.aadhaar_num" matInput placeholder="Enter Aadhaar card no">
+          <mat-error *ngIf="editForm.get('aadhaar_num')?.touched && editForm.get('aadhaar_num')?.hasError('required')">
+            Aadhaar card no is required!!!
+           </mat-error>
+           <mat-error *ngIf="editForm.get('aadhaar_num')?.touched && editForm.get('aadhaar_num')?.hasError('maxlength')">
+             Max Length is 12
+            </mat-error>
+            <mat-error *ngIf="editForm.get('aadhaar_num')?.touched && editForm.get('aadhaar_num')?.hasError('pattern')">
+              Please input Numbers  only!
+             </mat-error>
+         </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Permanent address </mat-label>
+          <textarea formControlName="permanent_address" [(ngModel)]="employee.permanent_address" matInput></textarea>
+          <mat-error
+            *ngIf="editForm.get('permanent_address')?.touched && editForm.get('permanent_address')?.hasError('required')">
+            Permanent address is Required!!!
+          </mat-error>
+          <mat-error
+            *ngIf="editForm.get('permanent_address')?.touched && editForm.get('permanent_address')?.hasError('maxlength')">
+            Text should not exceeds 200 characters!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Present address</mat-label>
+          <textarea formControlName="present_address" [(ngModel)]="employee.present_address" matInput></textarea>
+          <mat-error
+            *ngIf="editForm.get('present_address')?.touched && editForm.get('present_address')?.hasError('required')">
+            Present address is Required!!!
+          </mat-error>
+          <mat-error
+            *ngIf="editForm.get('present_address')?.touched && editForm.get('present_address')?.hasError('maxlength')">
+            Text should not exceeds 200 characters!
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="editForm.invalid" class="m-2">Save</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button mat-raised-button color="warn" (click)="dashboard()"  class="m-2">Cancel</button>
+  </form>
+</div>
